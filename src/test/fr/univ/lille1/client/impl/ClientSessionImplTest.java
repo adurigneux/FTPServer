@@ -87,24 +87,10 @@ public class ClientSessionImplTest {
     public void testIsNotConnected() throws Exception {
         clientSession.close();
         Assert.assertEquals(false, clientSession.isConnected());
-    }
 
-
-    /**
-     * Method: quitSession()
-     */
-    @Test
-    public void testQuitSession() throws Exception {
         clientSession.quitSession();
         Assert.assertEquals(false, clientSession.isConnected());
 
-    }
-
-    /**
-     * Method: getConnectionSocket()
-     */
-    @Test
-    public void testGetConnectionSocket() throws Exception {
         Assert.assertNotNull(clientSession.getConnectionSocket());
     }
 

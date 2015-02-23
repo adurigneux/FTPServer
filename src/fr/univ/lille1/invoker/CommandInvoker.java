@@ -43,6 +43,7 @@ public class CommandInvoker {
         this.factoryMap.put("XRMD", this.factoryMap.get("RMD"));
         this.factoryMap.put("DELE", this.factoryMap.get("RMD"));
         this.factoryMap.put("TYPE", new TypeCommand());
+        this.factoryMap.put("SYST", new SystCommand());
 
 
         //list of commands that can only be executed in windows

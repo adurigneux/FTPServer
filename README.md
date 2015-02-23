@@ -6,7 +6,11 @@ Auteurs
 
 16/02/2015
 
+Dépendances
 ----------
+Commons-net-3.3.jar
+hamcrest-core-1.3.jar
+junit-4.12.jar
 
 Introduction
 -------------

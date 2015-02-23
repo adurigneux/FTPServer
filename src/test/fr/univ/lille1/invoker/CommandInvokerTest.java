@@ -52,9 +52,6 @@ public class CommandInvokerTest {
         client.init();
     }
 
-    @After
-    public void after() throws Exception {
-    }
 
     /**
      * Method: getCommand()
@@ -269,32 +266,31 @@ public class CommandInvokerTest {
      * Method: executeCommand(STOR lena_original.jpg)
      */
     @Test
-    public void test17ExecuteCommandStor() {
-        try {
-            ftpClient.mkd("testSend");
-            ftpClient.cwd("testSend");
+    public void test17ExecuteCommandStor() throws Exception {
 
-            Assert.assertTrue(!(new File("datafiles/testSend/lena_original.jpg"))
-                    .exists());
+        ftpClient.mkd("testSend");
+        ftpClient.cwd("testSend");
 
-            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-            File firstLocalFile = new File("datafiles/lena_original.jpg");
+        Assert.assertTrue(!(new File("datafiles/testSend/lena_original.jpg"))
+                .exists());
 
-            String firstRemoteFile = "lena_original.jpg";
-            InputStream inputStream = new FileInputStream(firstLocalFile);
+        ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+        File firstLocalFile = new File("datafiles/lena_original.jpg");
 
-            ftpClient.storeFile(firstRemoteFile, inputStream);
-            inputStream.close();
+        String firstRemoteFile = "lena_original.jpg";
+        InputStream inputStream = new FileInputStream(firstLocalFile);
 
-            Assert.assertEquals(226, ftpClient.getReplyCode());
+        ftpClient.storeFile(firstRemoteFile, inputStream);
+        inputStream.close();
 
-            Assert.assertTrue((new File("datafiles/testSend/lena_original.jpg"))
-                    .exists());
+        Assert.assertEquals(226, ftpClient.getReplyCode());
 
-            ftpClient.cdup();
-            ftpClient.rmd("testSend");
-        } catch (IOException ignore) {
-        }
+        Assert.assertTrue((new File("datafiles/testSend/lena_original.jpg"))
+                .exists());
+
+        ftpClient.cdup();
+        ftpClient.rmd("testSend");
+
     }
 
     /**

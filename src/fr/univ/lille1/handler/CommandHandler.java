@@ -11,11 +11,12 @@ import fr.univ.lille1.utils.ReturnCode;
  */
 public interface CommandHandler {
 
-
+    /**
+     * dsksdf
+     */
     public void init();
 
     public void close();
-
 
     public void sendMessage(String message);
 
