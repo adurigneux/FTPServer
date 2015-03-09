@@ -9,7 +9,7 @@ import fr.univ.lille1.utils.ReturnCode;
  * This class is owned by every client. It contains the client session and the
  * reference to the commandInvoker. Every command sent to the server by the user
  * is sent to the commandInvoker.
- *
+ * 
  * @author Durigneux Antoine
  * @author Scouflaire Emmanuel
  */
@@ -37,7 +37,7 @@ public class ClientHandler extends Thread {
             while (clientSession.isConnected()) {
                 CommandRequest commandRequest = clientSession
                         .getCommandHandler().receiveMessage();
-                if (!commandRequest.getCommand().isEmpty()) {
+                if (commandRequest != null && !commandRequest.getCommand().isEmpty()) {
                     this.commandInvoker.executeCommand(clientSession,
                             commandRequest);
                 }
@@ -46,6 +46,6 @@ public class ClientHandler extends Thread {
         } finally {
             clientSession.close();
         }
-    }
+	}
 
 }

@@ -8,20 +8,25 @@ import fr.univ.lille1.utils.ReturnCode;
 import java.io.File;
 
 /**
- * Implementation of the CWD command.
- * This command is used to Change the current directory of the client
- *
+ * Implementation of the CWD command. This command is used to Change the current
+ * directory of the client
+ * 
  * @author Durigneux Antoine
  * @author Scouflaire Emmanuel
  */
 public class CwdCommand implements Command {
 
     @Override
-    public void execute(ClientSession clientSession, CommandRequest commandRequest) {
+    public void execute(ClientSession clientSession,
+                        CommandRequest commandRequest) {
 
-        String path = commandRequest.getParam()[0];
-        if (!path.contains(clientSession.getCurrentPath())) {
-            path = clientSession.getCurrentPath() + "/" + path;
+        String path = "";
+
+        if (commandRequest.hasParam()) {
+            path = clientSession.getCurrentPath() + "/"
+                    + commandRequest.getParam()[0];
+        } else {
+            path = clientSession.getCurrentPath();
         }
 
         File result = new File(path);

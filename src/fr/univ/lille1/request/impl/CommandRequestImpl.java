@@ -17,6 +17,11 @@ public class CommandRequestImpl implements CommandRequest {
 
     public CommandRequestImpl(String commandLine) {
 
+        if (commandLine == null) {
+            this.command = "";
+            this.hasParam = false;
+            return;
+        }
         String[] split = commandLine.split("\\s+");
         this.command = split[0];
         if (split.length > 1) {

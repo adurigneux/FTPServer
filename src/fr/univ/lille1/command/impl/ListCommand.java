@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Implementation of the LITS command. This command is used to list all the files
@@ -40,14 +42,27 @@ a space and the abbreviated pathname of the file.
         File res = new File(clientSession.getCurrentPath());
         OutputStream out = null;
         final Runtime runtime = Runtime.getRuntime();
-        final String[] args = new String[]{"ls", "-l", clientSession.getCurrentPath()};
+        String path = clientSession.getCurrentPath();
+        if (commandRequest.hasParam()) {
+            path += "/" + commandRequest.getParam()[0];
+        }
+
+        Map<String, String> environment = new HashMap<String, String>(System.getenv());
+        environment.put("LC_ALL", "en_EN");
+        String[] envp = new String[environment.size()];
+        int count = 0;
+        for (Map.Entry<String, String> entry : environment.entrySet()) {
+            envp[count++] = entry.getKey() + "=" + entry.getValue();
+        }
+
+        final String cmd = "ls -l " + path;
         InputStream is = null;
 
         try {
             clientSession.getCommandHandler().sendMessage(ReturnCode.FILESTATUSOK);
 
             // Execute ls -l command.
-            is = runtime.exec(args).getInputStream();
+            is = runtime.exec(cmd, envp).getInputStream();
             out = clientSession.getDataConnectionHandler().open().getOutputStream();
 
             // Send through data socket.
@@ -61,7 +76,6 @@ a space and the abbreviated pathname of the file.
             clientSession.getCommandHandler().sendMessage(ReturnCode.CLOSEDATACONNECTION);
             clientSession.getDataConnectionHandler().close();
         } catch (IOException e) {
-
         } finally {
 
             try {

@@ -27,7 +27,7 @@ public class FtpRequestHandler implements Runnable {
 
     @Override
     public void run() {
-
+        System.out.println("Welcome on your server, running on port : " + port);
         ServerSocket s = null;
         try {
             s = new ServerSocket(port);
